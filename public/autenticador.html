@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticador</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Autenticador</h1>
+    <h3 id="email">Email de Usuario</h3>
+    <h3 id="token">Token de Usuario</h3>
+    <button id="hiperenlace-btn" class="btn btn bg-warning">Redireccionar...</button>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/';
+            }
+            console.log(token);
+
+            const config = {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            };
+
+            console.log(config);
+            const emailText = document.querySelector('#email');
+            const tokenText = document.querySelector('#token');
+            const hiperenlaceBtn = document.querySelector('#hiperenlace-btn');
+
+            emailText.textContent = `Email: ${localStorage.getItem('email')}`;
+            tokenText.textContent = `Token: ${token.slice(0, 50)}...`;
+
+            hiperenlaceBtn.addEventListener('click', async () => {
+                try {
+                    if(!token) {
+                        throw new Error('Token no encontrado')
+                    }
+                    const confing = {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }
+                    const response = await axios.get('/rutaProtegida', config);
+
+                    if(response.status === 200) {
+                        window.location.href = '/restringida';
+                    } else {
+                        throw new Error('No autorizado');
+                    }
+                    console.log(response.data);
+                } catch (error) {
+                    console.log(error);
+                    alert('No se pudo ingresar');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

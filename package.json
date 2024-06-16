@@ -1,0 +1,29 @@
+{
+  "name": "desafio-fbi-system",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "mocha --exit"
+  },
+  "keywords": [],
+  "author": "Millaray zg",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0",
+    "pg-format": "^1.0.4"
+  },
+  "devDependencies": {
+    "mocha": "^10.4.0",
+    "nodemon": "^3.1.3",
+    "supertest": "^7.0.0"
+  }
+}
